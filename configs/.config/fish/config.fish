@@ -27,3 +27,4 @@ if status is-interactive
 end
 starship init fish | source
 export PATH="$HOME/.local/bin:$PATH"
+fish_add_path -g $HOME/.local/bin
