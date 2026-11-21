@@ -2,7 +2,7 @@
 # bootstrap: bash <(curl -fsSL https://raw.githubusercontent.com/USER/rice/main/install.sh)
 set -Eeuo pipefail
 
-RICE_REPO="${RICE_REPO:-USER/rice}"          # ← поменяй на свой репозиторий
+RICE_REPO="${RICE_REPO:-Sa1ler/Arch-Hyprland-Dotfiles}"
 RICE_BRANCH="${RICE_BRANCH:-main}"
 RICE_DIR="${RICE_DIR:-$HOME/.local/share/rice}"
 URL="https://github.com/$RICE_REPO.git"
