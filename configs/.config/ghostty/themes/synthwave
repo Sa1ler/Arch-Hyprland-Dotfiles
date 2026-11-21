@@ -1,0 +1,24 @@
+# Synthwave 84 — generated from the central Quickshell theme
+background = #0D0B1A
+foreground = #F4E8FF
+cursor-color = #FF6AD5
+cursor-text = #0D0B1A
+selection-background = #332E6B
+selection-foreground = #0D0B1A
+
+palette = 0=#120F22
+palette = 1=#FE4450
+palette = 2=#72F1B8
+palette = 3=#FEDE5D
+palette = 4=#03EDF9
+palette = 5=#FF6AD5
+palette = 6=#36F9F6
+palette = 7=#C8B8E8
+palette = 8=#62527A
+palette = 9=#FF7180
+palette = 10=#8FFFCB
+palette = 11=#FFE985
+palette = 12=#62F4FF
+palette = 13=#FF91E1
+palette = 14=#80FFFA
+palette = 15=#F4E8FF

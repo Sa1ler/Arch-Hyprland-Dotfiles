@@ -1,0 +1,96 @@
+1795256284882	Sync.SyncScheduler	DEBUG	Next sync in 3600000 ms. (why=schedule)
+1795256287367	FirefoxAccounts	INFO	checking if the command queue is empty now we are idle
+1795256287371	FirefoxAccounts	TRACE	flushQueue total queued items: 0
+1795256287372	FirefoxAccounts	INFO	pending command check had no commands
+1795256292371	Sync.SyncScheduler	DEBUG	Network link status changed to "changed". Offline?: false
+1795256310258	Sync.SyncScheduler	DEBUG	Network link status changed to "changed". Offline?: false
+1795256310985	FirefoxAccounts	TRACE	not checking freshness of profile as it remains recent
+1795256311092	FirefoxAccounts	TRACE	not checking freshness of profile as it remains recent
+1795256311129	FirefoxAccounts	TRACE	not checking freshness of profile as it remains recent
+1795256311129	FirefoxAccounts	TRACE	not checking freshness of profile as it remains recent
+1795256311139	FirefoxAccounts	TRACE	not checking freshness of profile as it remains recent
+1795256311189	FirefoxAccounts	TRACE	not checking freshness of profile as it remains recent
+1795256311210	FirefoxAccounts	TRACE	not checking freshness of profile as it remains recent
+1795256311230	FirefoxAccounts	TRACE	not checking freshness of profile as it remains recent
+1795256312640	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256312972	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256315290	Sync.AddonsReconciler	DEBUG	Add-on change: onInstalled to browsec@browsec.com
+1795256315290	Sync.AddonsReconciler	DEBUG	Rectifying state for addon Browsec VPN - бесплатное ВПН расширение (version=4.1.1, id=browsec@browsec.com)
+1795256315290	Sync.AddonsReconciler	INFO	Saving reconciler state to file: addonsreconciler
+1795256319425	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256319545	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256320369	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256322402	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256322418	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256322421	Sync.Engine.History.Tracker	WARN	Attempted to add undefined ID to tracker
+1795256322576	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256322577	Sync.Engine.History.Tracker	WARN	Attempted to add undefined ID to tracker
+1795256324865	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256324869	Sync.Engine.History.Tracker	WARN	Attempted to add undefined ID to tracker
+1795256325173	Sync.Engine.History.Tracker	WARN	Attempted to add undefined ID to tracker
+1795256325191	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256325677	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256372633	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256394769	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256395121	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256395148	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256395316	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256397910	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256398235	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256398723	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256403242	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256416599	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256416606	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write - bumping score
+1795256417394	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256417642	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write - bumping score
+1795256417650	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256417663	FirefoxAccounts	DEBUG	FxAccountsProfileClient: Requested profile
+1795256417663	FirefoxAccounts	DEBUG	getOAuthToken enter for scope 'profile'
+1795256417663	FirefoxAccounts	TRACE	getCachedToken returning cached token
+1795256417663	FirefoxAccounts	DEBUG	getOAuthToken returning a cached token with scope 'profile'
+1795256417663	Services.Common.RESTRequest	DEBUG	GET request to https://profile.accounts.firefox.com/v1/profile
+1795256418178	Services.Common.RESTRequest	DEBUG	GET https://profile.accounts.firefox.com/v1/profile 304
+1795256423715	Sync.RemoteTabs	INFO	Generating tab list with filter
+1795256423720	Sync.Engine.Tabs	WARN	Dropping tabs from an unknown client: 09DKRFMdCtat
+1795256423720	Sync.Engine.Tabs	WARN	Dropping tabs from an unknown client: DSdtBNQvvHPK
+1795256423720	Sync.Engine.Tabs	WARN	Dropping tabs from an unknown client: VzUWcnhz8XQw
+1795256423720	Sync.Engine.Tabs	WARN	Dropping tabs from an unknown client: yKduYS_LGrWn
+1795256423720	Sync.RemoteTabs	INFO	Final tab list has 0 clients with 0 tabs.
+1795256425958	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256425992	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256426158	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256428260	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256428379	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256428430	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256428819	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256430628	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256430654	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256430831	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256433106	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256433113	Sync.Engine.History.Tracker	WARN	Attempted to add undefined ID to tracker
+1795256433406	Sync.Engine.History.Tracker	WARN	Attempted to add undefined ID to tracker
+1795256433427	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256433929	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795256440010	Sync.SyncScheduler	DEBUG	Network link status changed to "changed". Offline?: false
+1795256451228	Sync.SyncScheduler	DEBUG	Network link status changed to "changed". Offline?: false
+1795256454923	Sync.Engine.Tabs.Tracker	DEBUG	Detected a tab change, but conditions aren't met for a quick write or a score bump
+1795258244689	Sync.SyncScheduler	DEBUG	Going to sleep, doing a quick sync.
+1795258244689	Sync.Service	DEBUG	User-Agent: Firefox/158.0.1 (Linux x86_64) FxSync/1.160.0.20261020085820.desktop
+1795258244689	Sync.Service	INFO	Starting sync at 2026-11-21 13:50:44 in browser session MnisjUOwIxnO
+1795258244689	Sync.SyncScheduler	DEBUG	Clearing sync triggers and the global score.
+1795258244693	Sync.Status	INFO	Resetting Status.
+1795258244693	Sync.Status	DEBUG	Status.service: success.status_ok => success.status_ok
+1795258244694	FirefoxAccounts	DEBUG	FxAccountsProfileClient: Requested profile
+1795258244694	FirefoxAccounts	DEBUG	getOAuthToken enter for scope 'profile'
+1795258244695	FirefoxAccounts	TRACE	getCachedToken returning cached token
+1795258244695	FirefoxAccounts	DEBUG	getOAuthToken returning a cached token with scope 'profile'
+1795258244695	Services.Common.RESTRequest	DEBUG	GET request to https://profile.accounts.firefox.com/v1/profile
+1795260674920	Sync.SyncScheduler	DEBUG	Network link status changed to "changed". Offline?: false
+1795260674930	Sync.SyncScheduler	DEBUG	Woke from sleep.
+1795260674930	Sync.SyncScheduler	DEBUG	Network link status changed to "changed". Offline?: false
+1795260675191	Sync.Resource	WARN	GET request to https://sync-1-us-west1-g.sync.services.mozilla.com/1.5/281481152/info/collections failed: [Exception... "The lookup of the hostname failed"  nsresult: "0x804b001e (NS_ERROR_UNKNOWN_HOST)"  location: "<unknown>"  data: no] No traceback available
+1795260675191	Sync.Status	DEBUG	Status.sync: success.sync => error.login.reason.network
+1795260675191	Sync.Status	DEBUG	Status.service: success.status_ok => error.sync.failed
+1795260675192	Sync.ErrorHandler	ERROR	Sync encountered an error: [Exception... "The lookup of the hostname failed"  nsresult: "0x804b001e (NS_ERROR_UNKNOWN_HOST)"  location: "<unknown>"  data: no] No traceback available
+1795260675192	Sync.SyncScheduler	DEBUG	Next sync in 3600000 ms. (why=reschedule)
+1795260675194	Sync.Service	DEBUG	Exception calling anonymous function: [Exception... "The lookup of the hostname failed"  nsresult: "0x804b001e (NS_ERROR_UNKNOWN_HOST)"  location: "<unknown>"  data: no] No traceback available

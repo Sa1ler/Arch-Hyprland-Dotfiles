@@ -1,0 +1,24 @@
+# Default — generated from the central Quickshell theme
+background = #0E1217
+foreground = #F0F4F8
+cursor-color = #5B9BFF
+cursor-text = #0E1217
+selection-background = #2C3A50
+selection-foreground = #FFFFFF
+
+palette = 0=#151B23
+palette = 1=#E87988
+palette = 2=#9CCB8A
+palette = 3=#E8C477
+palette = 4=#5B9BFF
+palette = 5=#B794E5
+palette = 6=#69C9D0
+palette = 7=#C4CED9
+palette = 8=#657386
+palette = 9=#F08F9C
+palette = 10=#B0D99D
+palette = 11=#F2D28D
+palette = 12=#83B3FF
+palette = 13=#C9A9F0
+palette = 14=#8ADDE2
+palette = 15=#F0F4F8

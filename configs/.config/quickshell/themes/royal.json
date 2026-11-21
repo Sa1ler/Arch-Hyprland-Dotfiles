@@ -1,0 +1,16 @@
+{
+    "name": "Royal",
+    "colors": {
+        "background": "#100E20",
+        "surface": "#1B1830",
+        "surfaceHover": "#292449",
+        "surfaceSelected": "#3D348B",
+        "accent": "#F7B801",
+        "text": "#F5F0DC",
+        "textSecondary": "#B7B1D5",
+        "textDisabled": "#716B8C",
+        "textSelected": "#FFFFFF",
+        "border": "#35304F",
+        "separator": "#29253F"
+    }
+}

@@ -1,0 +1,47 @@
+{
+  "theme": {
+    "current": "golden"
+  },
+  "launcher": {
+    "maxResults": 20,
+    "searchDebounce": 100,
+    "showIcons": true,
+    "usageRanks": {
+      "Firefox": 21,
+      "Files": 8,
+      "Terminal": 23,
+      "Telegram": 2,
+      "Happ": 7,
+      "Bluetooth Manager": 1,
+      "btop++": 1,
+      "Ski": 4,
+      "Visual Studio Code": 2,
+      "About Xfce": 1,
+      "CMake": 1
+    }
+  },
+  "island": {
+    "enabled": true,
+    "height": 34,
+    "indicators": {
+      "battery": true,
+      "clock": true,
+      "network": true,
+      "workspaces": true
+    },
+    "length": 220,
+    "margin": 4,
+    "shape": "notch"
+  },
+  "settings": {
+    "animations": true,
+    "soundEffects": true,
+    "soundVolume": 100
+  },
+  "notifications": {
+    "dnd": false
+  },
+  "display": {
+    "nightMode": false
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "name": "Inferno",
+    "colors": {
+        "background": "#130F0B",
+        "surface": "#241711",
+        "surfaceHover": "#352018",
+        "surfaceSelected": "#472319",
+        "accent": "#FF6B35",
+        "text": "#FFF4ED",
+        "textSecondary": "#C9A18E",
+        "textDisabled": "#755B4E",
+        "textSelected": "#FFFFFF",
+        "border": "#493025",
+        "separator": "#302019"
+    }
+}

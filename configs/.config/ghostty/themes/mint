@@ -1,0 +1,24 @@
+# Mint — generated from the central Quickshell theme
+background = #0E1412
+foreground = #E8F4F0
+cursor-color = #5AE8C8
+cursor-text = #0E1412
+selection-background = #2A3E34
+selection-foreground = #0E1412
+
+palette = 0=#111A16
+palette = 1=#E47778
+palette = 2=#5AE8C8
+palette = 3=#D6C879
+palette = 4=#6FA7D8
+palette = 5=#B18BD0
+palette = 6=#5AE8C8
+palette = 7=#B8CEC5
+palette = 8=#5D766B
+palette = 9=#F09291
+palette = 10=#83F0D6
+palette = 11=#E9D991
+palette = 12=#8ABEF0
+palette = 13=#C6A5E2
+palette = 14=#8AF3DF
+palette = 15=#E8F4F0

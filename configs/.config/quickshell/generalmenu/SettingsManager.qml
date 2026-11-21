@@ -1,0 +1,1 @@
+../core/SettingsManager.qml

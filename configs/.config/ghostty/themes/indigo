@@ -1,0 +1,24 @@
+# Indigo — generated from the central Quickshell theme
+background = #0A0818
+foreground = #E8E4F4
+cursor-color = #7A6AFF
+cursor-text = #0A0818
+selection-background = #28225A
+selection-foreground = #0A0818
+
+palette = 0=#100D24
+palette = 1=#E47791
+palette = 2=#8FBD91
+palette = 3=#D9C27C
+palette = 4=#7A6AFF
+palette = 5=#B58BEA
+palette = 6=#6FC7D1
+palette = 7=#BEB6D4
+palette = 8=#655B85
+palette = 9=#F095A9
+palette = 10=#A8D2A7
+palette = 11=#EAD394
+palette = 12=#988BFF
+palette = 13=#C6A4F2
+palette = 14=#8ADCE3
+palette = 15=#E8E4F4

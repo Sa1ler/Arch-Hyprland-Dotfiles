@@ -1,0 +1,94 @@
+
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+command_timeout = 1000
+
+format = """
+[󰣇](bold purple) $directory$git_branch$git_status$nodejs$python$rust$time
+$character"""
+
+right_format = '$cmd_duration$status'
+
+# ───────── DIRECTORY ─────────
+
+[directory]
+style = 'bold white'
+format = '[$path]($style)'
+truncation_length = 3
+truncate_to_repo = true
+truncation_symbol = '…/'
+home_symbol = '~'
+read_only = ' 󰌾'
+read_only_style = 'bold red'
+
+# ───────── GIT ─────────
+
+[git_branch]
+symbol = '󰊢 '
+style = 'bold cyan'
+format = '[ $symbol$branch]($style)'
+
+[git_status]
+style = 'bold yellow'
+format = ' [$all_status$ahead_behind]($style)'
+conflicted = '󰞇 ${count} '
+ahead = '⇡${count} '
+behind = '⇣${count} '
+diverged = '⇕ '
+untracked = '?${count} '
+stashed = '󰏗 ${count} '
+modified = '~${count} '
+staged = '+${count} '
+renamed = '»${count} '
+deleted = '✘${count} '
+
+# ───────── LANGUAGES ─────────
+
+[nodejs]
+symbol = '󰎙 '
+style = 'bold green'
+format = ' [ $symbol$version]($style) '
+detect_files = ['package.json', '.node-version', '.nvmrc']
+detect_folders = ['node_modules']
+
+[python]
+symbol = '󰌠 '
+style = 'bold yellow'
+format = ' [ $symbol$version]($style) '
+
+[rust]
+symbol = '󱘗 '
+style = 'bold red'
+format = ' [ $symbol$version]($style) '
+
+# ───────── TIME ─────────
+
+[time]
+disabled = false
+time_format = '%H:%M'
+style = 'bold purple'
+format = ' [󰥔 $time]($style)'
+
+# ───────── COMMAND ─────────
+
+[cmd_duration]
+min_time = 500
+show_milliseconds = false
+style = 'bold yellow'
+format = '[󰅐 $duration]($style) '
+
+[status]
+disabled = false
+format = '[✘ $status]($style) '
+style = 'bold red'
+success_symbol = ''
+
+[character]
+success_symbol = '[➤](bold purple) '
+error_symbol = '[➤](bold red) '
+vimcmd_symbol = '[➤](bold cyan) '
+vimcmd_replace_one_symbol = '[➤](bold purple) '
+vimcmd_replace_symbol = '[➤](bold purple) '
+vimcmd_visual_symbol = '[➤](bold yellow) '

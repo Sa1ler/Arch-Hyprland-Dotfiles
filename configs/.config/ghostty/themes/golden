@@ -1,0 +1,24 @@
+# Golden — generated from the central Quickshell theme
+background = #1C1408
+foreground = #F8EBD0
+cursor-color = #F5B942
+cursor-text = #1C1408
+selection-background = #4D371A
+selection-foreground = #1C1408
+
+palette = 0=#24190B
+palette = 1=#D96C54
+palette = 2=#A6A85D
+palette = 3=#F5B942
+palette = 4=#C58A3A
+palette = 5=#B98576
+palette = 6=#79A89A
+palette = 7=#D9C7A4
+palette = 8=#796342
+palette = 9=#F08B70
+palette = 10=#BCC078
+palette = 11=#FFD16A
+palette = 12=#E0A64E
+palette = 13=#D29A8A
+palette = 14=#9BC5B4
+palette = 15=#F8EBD0

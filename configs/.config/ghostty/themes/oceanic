@@ -1,0 +1,24 @@
+# Oceanic — generated from the central Quickshell theme
+background = #0B141C
+foreground = #E4F0F5
+cursor-color = #5BC0EB
+cursor-text = #0B141C
+selection-background = #253D54
+selection-foreground = #0B141C
+
+palette = 0=#101B25
+palette = 1=#E4777D
+palette = 2=#8FC7A2
+palette = 3=#E4C27A
+palette = 4=#5B9BD5
+palette = 5=#B18BCB
+palette = 6=#5BC0EB
+palette = 7=#B7CAD4
+palette = 8=#557184
+palette = 9=#F09196
+palette = 10=#A6D8B4
+palette = 11=#F0D18F
+palette = 12=#82B7EB
+palette = 13=#C5A4DC
+palette = 14=#83D8F0
+palette = 15=#E4F0F5

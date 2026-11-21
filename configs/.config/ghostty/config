@@ -1,0 +1,53 @@
+
+# ── Appearance ──────────────────────────────
+
+window-theme = dark
+background = #0B0F16
+foreground = #DCE5F2
+
+background-opacity = 0.92
+background-blur = true
+
+# ── Cursor & Selection ──────────────────────
+
+cursor-color = #8AAEFF
+cursor-text = #0B0F16
+
+selection-background = #293A55
+selection-foreground = #F0F5FF
+
+# ── ANSI Palette ────────────────────────────
+
+palette = 0=#111722
+palette = 1=#E07882
+palette = 2=#91B89A
+palette = 3=#D6B77C
+palette = 4=#7EA6E8
+palette = 5=#B39AE0
+palette = 6=#79B9BD
+palette = 7=#C5D0DF
+
+palette = 8=#586579
+palette = 9=#F08B94
+palette = 10=#A3CBAA
+palette = 11=#E8C98E
+palette = 12=#91B6F5
+palette = 13=#C5A9F0
+palette = 14=#8ACBD0
+palette = 15=#E8EFF8
+
+# ── Typography ──────────────────────────────
+
+font-size = 12
+font-thicken = false
+
+# ── Window ──────────────────────────────────
+
+window-padding-x = 14
+window-padding-y = 12
+
+# ── Behavior ────────────────────────────────
+ 
+clipboard-paste-protection = true
+shell-integration = detect
+scrollback-limit = 10000

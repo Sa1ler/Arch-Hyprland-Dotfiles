@@ -1,4 +1,17 @@
 #!/usr/bin/env bash
+export GIT_PAGER=cat
+cmd_missed(){
+  local -a tracked; mapfile -t tracked < <(list track.list)
+  local d rel t hit
+  for d in "$HOME"/.config/*/ "$HOME"/.local/bin/; do
+    [[ -d $d ]] || continue
+    rel="${d%/}"; rel="${rel#"$HOME"/}"
+    hit=0
+    for t in "${tracked[@]}"; do [[ $rel == "$t" || $rel == "$t"/* ]] && { hit=1; break; }; done
+    (( hit )) || printf '  не под наблюдением: %s\n' "$rel"
+  done
+  return 0
+}
 # rice — менеджер личной системы Arch + Hyprland
 set -Eeuo pipefail
 
@@ -290,6 +303,7 @@ case "$cmd" in
   deploy|install) cmd_deploy "$@";;
   sync)           cmd_sync "$@";;
   status|diff)    cmd_status "$@";;
+missed) cmd_missed "$@";;
   add)            cmd_add "$@";;
   pull)           cmd_pull "$@";;
   help|-h|--help) usage;;

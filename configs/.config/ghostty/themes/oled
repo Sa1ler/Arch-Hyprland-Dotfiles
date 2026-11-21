@@ -1,0 +1,24 @@
+# OLED — generated from the central Quickshell theme
+background = #000000
+foreground = #EEF2F9
+cursor-color = #8B9EFF
+cursor-text = #000000
+selection-background = #1E1E2E
+selection-foreground = #000000
+
+palette = 0=#08080D
+palette = 1=#F07178
+palette = 2=#A6CC70
+palette = 3=#E6C384
+palette = 4=#8B9EFF
+palette = 5=#C099FF
+palette = 6=#78DCE8
+palette = 7=#B8C1D1
+palette = 8=#50596A
+palette = 9=#FF8A91
+palette = 10=#B8DF82
+palette = 11=#F2D49A
+palette = 12=#A5B4FF
+palette = 13=#D2AEFF
+palette = 14=#91E8F0
+palette = 15=#EEF2F9

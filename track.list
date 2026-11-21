@@ -2,7 +2,6 @@
 .config/hypr
 .config/quickshell
 .config/ghostty
-.config/mako
 .config/starship.toml
 .config/fastfetch
 .config/fish
