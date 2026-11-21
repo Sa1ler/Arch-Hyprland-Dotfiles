@@ -1,0 +1,12 @@
+# пути относительно $HOME, каталоги синкаются целиком с --delete
+.config/hypr
+.config/quickshell
+.config/ghostty
+.config/mako
+.config/starship.toml
+.config/fastfetch
+.config/fish
+.config/mozilla
+.config/nvim
+.config/ski
+.local/bin

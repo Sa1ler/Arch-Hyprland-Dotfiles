@@ -1,0 +1,21 @@
+*.qmlc
+*.pyc
+__pycache__/
+node_modules/
+cache/
+Cache/
+.qmlls.ini
+*.log
+*.tmp
+*.bak
+*~
+.git/
+# секреты
+.env
+*.env
+*.pem
+*.key
+*.kdbx
+id_rsa*
+id_ed25519*
+.git-credentials

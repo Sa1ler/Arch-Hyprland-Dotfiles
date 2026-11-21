@@ -1,0 +1,297 @@
+#!/usr/bin/env bash
+# rice — менеджер личной системы Arch + Hyprland
+set -Eeuo pipefail
+
+SELF="$(readlink -f "${BASH_SOURCE[0]}")"
+RICE_DIR="$(cd -- "$(dirname -- "$SELF")/.." && pwd)"
+cd "$RICE_DIR"
+
+RICE_BRANCH="main"
+RICE_BACKUP_DIR="$HOME/.cache/rice/backups"
+RICE_KEEP_BACKUPS=10
+RICE_GIT_NAME=""
+RICE_GIT_EMAIL=""
+PACMAN_OPTS=(--needed --noconfirm)
+YAY_OPTS=(--needed --noconfirm --removemake --answerclean None --answerdiff None)
+if [[ -f rice.conf ]]; then . rice.conf; fi
+
+if [[ -t 1 ]]; then B=$'\e[1m'; G=$'\e[32m'; Y=$'\e[33m'; R=$'\e[31m'; C=$'\e[36m'; N=$'\e[0m'
+else B= G= Y= R= C= N=; fi
+msg(){ printf '%s==>%s %s\n' "$C$B" "$N" "$*"; }
+ok(){  printf '%s ✓%s %s\n'  "$G" "$N" "$*"; }
+warn(){ printf '%s !%s %s\n' "$Y" "$N" "$*" >&2; }
+die(){ printf '%s ✗%s %s\n'  "$R" "$N" "$*" >&2; exit 1; }
+trap 'printf "%s ✗%s ошибка на строке %s\n" "$R" "$N" "$LINENO" >&2' ERR
+
+have(){ command -v "$1" >/dev/null 2>&1; }
+EXCLUDE=(); [[ -f sync.ignore ]] && EXCLUDE=(--exclude-from="$RICE_DIR/sync.ignore")
+BACKUP=""
+
+# список из файла: без комментариев, пустых строк и пробелов
+list(){ local f="${1:-}"; [[ -f $f ]] || return 0
+  sed -e 's/#.*//' -e 's/[[:space:]]//g' "$f" | grep -v '^$' || true; }
+
+filter_bl(){ local bl; bl="$(list packages/blacklist.txt | LC_ALL=C sort -u)"
+  if [[ -n $bl ]]; then grep -Fxv -f <(printf '%s\n' "$bl") || true; else cat; fi; }
+
+SUDO_PID=""
+sudo_up(){
+  (( EUID != 0 )) || die "запускай от своего пользователя, не от root"
+  sudo -v || die "sudo недоступен"
+  ( while true; do sudo -n true; sleep 50; kill -0 "$$" 2>/dev/null || exit 0; done ) &
+  SUDO_PID=$!
+  trap '[[ -n $SUDO_PID ]] && kill "$SUDO_PID" 2>/dev/null; true' EXIT
+}
+
+# ─────────────────────────── пакеты ───────────────────────────
+ensure_yay(){
+  have yay && return 0
+  msg "yay не найден — собираю из AUR"
+  sudo pacman -S --needed --noconfirm base-devel git
+  local tmp; tmp="$(mktemp -d)"
+  git clone --depth=1 https://aur.archlinux.org/yay.git "$tmp/yay"
+  ( cd "$tmp/yay" && makepkg -si --noconfirm --needed )
+  rm -rf "$tmp"
+  have yay || die "yay не установился"
+  ok "yay готов"
+}
+
+install_repo(){
+  local -a want
+  mapfile -t want < <( { list packages/pacman.txt; list "packages/pacman.$HOSTNAME.txt"; } | LC_ALL=C sort -u )
+  (( ${#want[@]} )) || { msg "pacman: список пуст"; return 0; }
+  msg "pacman: ${#want[@]} пакетов"
+  if ! sudo pacman -S "${PACMAN_OPTS[@]}" -- "${want[@]}"; then
+    warn "оптом не вышло (нет пакета в репо?) — ставлю по одному"
+    local p; for p in "${want[@]}"; do
+      sudo pacman -S "${PACMAN_OPTS[@]}" -- "$p" || warn "пропущен: $p"
+    done
+  fi
+}
+
+install_aur(){
+  local -a want
+  mapfile -t want < <( { list packages/aur.txt; list "packages/aur.$HOSTNAME.txt"; } | LC_ALL=C sort -u )
+  (( ${#want[@]} )) || { msg "aur: список пуст"; return 0; }
+  ensure_yay
+  msg "yay: ${#want[@]} пакетов"
+  if ! yay -S "${YAY_OPTS[@]}" -- "${want[@]}"; then
+    warn "оптом не вышло — ставлю по одному"
+    local p; for p in "${want[@]}"; do
+      yay -S "${YAY_OPTS[@]}" -- "$p" || warn "пропущен: $p"
+    done
+  fi
+}
+
+gen_packages(){
+  mkdir -p packages
+  { printf '# pacman -Qqen: явные пакеты из репозиториев\n# генерируется rice sync, руками не править (исключения → blacklist.txt)\n'
+    pacman -Qqen | filter_bl | LC_ALL=C sort -u; } > packages/pacman.txt
+  { printf '# pacman -Qqem: AUR/foreign, ставится через yay\n# генерируется rice sync\n'
+    pacman -Qqem | filter_bl | LC_ALL=C sort -u; } > packages/aur.txt
+}
+
+prune_pkgs(){
+  local -a keep inst gone
+  mapfile -t keep < <( { list packages/pacman.txt; list packages/aur.txt; list packages/blacklist.txt
+                         list "packages/pacman.$HOSTNAME.txt"; list "packages/aur.$HOSTNAME.txt"; } | LC_ALL=C sort -u )
+  mapfile -t inst < <(pacman -Qqe | LC_ALL=C sort -u)
+  mapfile -t gone < <(comm -23 <(printf '%s\n' "${inst[@]}") <(printf '%s\n' "${keep[@]}"))
+  (( ${#gone[@]} )) || { msg "лишних пакетов нет"; return 0; }
+  printf '  %s\n' "${gone[@]}"
+  local a; read -rp "Удалить ${#gone[@]} пакетов вместе с зависимостями? [y/N] " a
+  [[ $a == [yY] ]] || return 0
+  sudo pacman -Rns --noconfirm "${gone[@]}" || warn "часть не удалилась (нужна другим пакетам)"
+}
+
+# ─────────────────────────── конфиги ───────────────────────────
+backup_path(){
+  local rel="$1"; [[ -e "$HOME/$rel" ]] || return 0
+  mkdir -p "$BACKUP"
+  rsync -a --relative "$HOME/./$rel" "$BACKUP/" >/dev/null
+}
+
+prune_backups(){
+  [[ -d $RICE_BACKUP_DIR ]] || return 0
+  local -a d; mapfile -t d < <(ls -1d "$RICE_BACKUP_DIR"/*/ 2>/dev/null | LC_ALL=C sort)
+  (( ${#d[@]} > RICE_KEEP_BACKUPS )) && rm -rf -- "${d[@]:0:${#d[@]}-RICE_KEEP_BACKUPS}"
+  return 0
+}
+
+deploy_one(){
+  local rel="$1" src="$RICE_DIR/configs/$1" dst="$HOME/$1"
+  [[ -e $src ]] || { warn "в репо нет: $rel"; return 0; }
+  if [[ -d $src ]]; then
+    mkdir -p "$dst"; backup_path "$rel"
+    rsync -a --delete "${EXCLUDE[@]}" "$src/" "$dst/"
+  else
+    mkdir -p "$(dirname "$dst")"; backup_path "$rel"
+    rsync -a "$src" "$dst"
+  fi
+  ok "cfg $rel"
+}
+
+collect_one(){
+  local rel="$1" src="$HOME/$1" dst="$RICE_DIR/configs/$1"
+  [[ -e $src ]] || { warn "нет в системе: $rel"; return 0; }
+  if [[ -d $src ]]; then
+    mkdir -p "$dst"
+    rsync -a --delete "${EXCLUDE[@]}" "$src/" "$dst/"
+  else
+    mkdir -p "$(dirname "$dst")"; rsync -a "$src" "$dst"
+  fi
+}
+
+enable_services(){
+  local u
+  while IFS= read -r u; do sudo systemctl enable --now "$u" || warn "service: $u"; done < <(list services/system.txt)
+  while IFS= read -r u; do systemctl --user enable --now "$u" 2>/dev/null || warn "user service: $u"; done < <(list services/user.txt)
+  return 0
+}
+
+run_hook(){ local h="hooks/$1"; [[ -f $h ]] && { msg "hook: $1"; bash "$h"; }; return 0; }
+
+git_identity(){
+  git config user.name  >/dev/null 2>&1 || git config user.name  "${RICE_GIT_NAME:-$USER}"
+  git config user.email >/dev/null 2>&1 || git config user.email "${RICE_GIT_EMAIL:-$USER@$HOSTNAME}"
+}
+
+write_state(){
+  mkdir -p state
+  printf '{"host":"%s","sync":"%s","commit":"%s"}\n' \
+    "$HOSTNAME" "$(date -Is)" "$(git rev-parse --short HEAD 2>/dev/null || echo none)" > state/last-sync.json
+}
+
+# ─────────────────────────── команды ───────────────────────────
+cmd_deploy(){
+  local prune=0 only=""
+  while (( $# )); do case "$1" in
+    --prune) prune=1;; --configs-only) only=cfg;; --packages-only) only=pkg;;
+    *) die "неизвестный флаг: $1";; esac; shift; done
+
+  [[ -f /etc/arch-release ]] || die "это не Arch"
+  sudo_up
+  BACKUP="$RICE_BACKUP_DIR/$(date +%Y%m%d-%H%M%S)"
+
+  if [[ $only != cfg ]]; then
+    sudo pacman -Syu --needed --noconfirm git rsync curl base-devel
+    install_repo
+    install_aur
+    (( prune )) && prune_pkgs
+  fi
+
+  if [[ $only != pkg ]]; then
+    msg "раскатываю конфиги (бэкап: $BACKUP)"
+    while IFS= read -r rel; do deploy_one "$rel"; done < <(list track.list)
+    if [[ -d "hosts/$HOSTNAME" ]]; then
+      msg "оверлей хоста: $HOSTNAME"
+      rsync -a --backup --backup-dir="$BACKUP/_overlay" "hosts/$HOSTNAME/" "$HOME/"
+    fi
+    enable_services
+    prune_backups
+    run_hook post-deploy.sh
+  fi
+
+  write_state
+  ok "система развёрнута"
+}
+
+cmd_status(){
+  local rel out
+  msg "конфиги: система → репозиторий"
+  while IFS= read -r rel; do
+    [[ -e "$HOME/$rel" ]] || continue
+    if [[ -d "$HOME/$rel" ]]; then
+      out="$(rsync -ain --delete "${EXCLUDE[@]}" "$HOME/$rel/" "$RICE_DIR/configs/$rel/" | grep -v '^\.' || true)"
+    else
+      out="$(rsync -ain "$HOME/$rel" "$RICE_DIR/configs/$rel" | grep -v '^\.' || true)"
+    fi
+    [[ -n $out ]] && printf '%s\n' "$out" | sed "s|^|  [$rel] |"
+  done < <(list track.list)
+
+  msg "пакеты: система → списки"
+  diff <(list packages/pacman.txt) <(pacman -Qqen | filter_bl | LC_ALL=C sort -u) \
+    | grep -E '^[<>]' | sed 's/^>/  +pacman/; s/^</  -pacman/' || true
+  diff <(list packages/aur.txt) <(pacman -Qqem | filter_bl | LC_ALL=C sort -u) \
+    | grep -E '^[<>]' | sed 's/^>/  +aur/; s/^</  -aur/' || true
+  return 0
+}
+
+cmd_sync(){
+  local push=1 dry=0 m=""
+  while (( $# )); do case "$1" in
+    --no-push) push=0;; --dry-run|-n) dry=1;; -m) m="${2:?}"; shift;;
+    *) die "неизвестный флаг: $1";; esac; shift; done
+
+  (( dry )) && { cmd_status; return 0; }
+
+  if (( push )) && [[ -n "$(git remote)" ]]; then
+    git pull --rebase --autostash origin "$RICE_BRANCH" || warn "pull не удался — работаю локально"
+  fi
+
+  msg "собираю конфиги"
+  while IFS= read -r rel; do collect_one "$rel"; done < <(list track.list)
+  msg "снимаю списки пакетов"
+  gen_packages
+  write_state
+
+  git add -A
+  if git diff --cached --quiet; then ok "изменений с прошлой синхронизации нет"; return 0; fi
+
+  git diff --cached --stat
+  local add del files body
+  add=$(git diff --cached -U0 -- packages/ | grep -cE '^\+[^+]' || true)
+  del=$(git diff --cached -U0 -- packages/ | grep -cE '^-[^-]' || true)
+  files=$(git diff --cached --name-only | wc -l)
+  body="$(git diff --cached -U0 -- packages/ | grep -E '^[+-][^+-]' | sed 's/^+/+ /; s/^-/- /' || true)"
+
+  git_identity
+  git commit -m "${m:-sync($HOSTNAME): $files файлов, pkg +$add/-$del}" ${body:+-m "$body"}
+  ok "закоммичено: $(git rev-parse --short HEAD)"
+
+  if (( push )); then
+    if git push -u origin "$RICE_BRANCH"; then ok "залито на GitHub"
+    else warn "push не прошёл: настрой auth (gh auth login / SSH) и повтори rice sync"; fi
+  fi
+}
+
+cmd_add(){
+  local p="${1:?usage: rice add ~/.config/waybar}"
+  local rel="${p#"$HOME"/}"; rel="${rel#/}"; rel="${rel%/}"
+  [[ -e "$HOME/$rel" ]] || die "нет такого пути: $HOME/$rel"
+  if grep -Fxq "$rel" track.list 2>/dev/null; then msg "уже трекается: $rel"
+  else printf '%s\n' "$rel" >> track.list; ok "в track.list: $rel"; fi
+  collect_one "$rel"
+}
+
+cmd_pull(){
+  git pull --rebase --autostash origin "$RICE_BRANCH"
+  cmd_deploy "$@"
+}
+
+usage(){ cat <<EOF
+rice — личная система Arch + Hyprland
+
+  rice deploy [--prune] [--configs-only|--packages-only]
+        развернуть систему из репозитория (пакеты + конфиги + сервисы + хуки)
+        --prune — удалить явные пакеты, которых нет в списках
+  rice sync [--no-push] [--dry-run] [-m "msg"]
+        собрать конфиги и пакеты, показать дельту, закоммитить и запушить
+  rice status          что изменилось с прошлой синхронизации
+  rice add <путь>      добавить конфиг/каталог в отслеживание
+  rice pull            git pull + deploy (для второй машины)
+
+репозиторий: $RICE_DIR
+EOF
+}
+
+cmd="${1:-help}"; shift || true
+case "$cmd" in
+  deploy|install) cmd_deploy "$@";;
+  sync)           cmd_sync "$@";;
+  status|diff)    cmd_status "$@";;
+  add)            cmd_add "$@";;
+  pull)           cmd_pull "$@";;
+  help|-h|--help) usage;;
+  *) die "неизвестная команда: $cmd (rice help)";;
+esac
